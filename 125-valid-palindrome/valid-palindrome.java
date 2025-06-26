@@ -1,27 +1,28 @@
-import java.util.*;
-
 class Solution {
     public boolean isPalindrome(String s) {
         if (s == null) return false;
-        return isPalindromeHelper(s, 0 , s.length() -1);
-    }
-    private boolean isPalindromeHelper(String s, int start, int end){
-        if (start>= end){
-            return true;
-        }
-        char leftChar = s.charAt(start);
-        char rightChar = s.charAt(end);
 
-        if (!Character.isLetterOrDigit(leftChar)){
-            return isPalindromeHelper(s, start+1, end);
-        } else if (!Character.isLetterOrDigit(rightChar)){
-            return isPalindromeHelper(s, start, end-1);
-        }else{
-            if (Character.toLowerCase(leftChar) != Character.toLowerCase(rightChar)){
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            // Skip non-alphanumeric characters
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            // Compare characters (case insensitive)
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
                 return false;
             }
-            return isPalindromeHelper(s, start + 1, end - 1);
+
+            left++;
+            right--;
         }
+
+        return true;
     }
-        
 }
